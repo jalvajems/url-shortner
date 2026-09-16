@@ -86,24 +86,28 @@ d:\brototype\url-shortner\
 │   │   ├── utils/              # ShortCodeGenerator & Exception Filters
 │   │   ├── app.module.ts
 │   │   └── main.ts
+│   ├── Dockerfile
 │   ├── test/
 │   ├── .env.example
 │   ├── package.json
 │   └── tsconfig.json
 │
-└── frontend/
-    ├── src/
-    │   ├── components/         # ProtectedRoute, UI layout components
-    │   ├── context/            # AuthContext state manager
-    │   ├── pages/              # LoginPage, RegisterPage, DashboardPage
-    │   ├── services/           # api.ts (Axios), auth.service.ts, url.service.ts
-    │   ├── types/              # TypeScript interfaces
-    │   ├── App.tsx
-    │   ├── main.tsx
-    │   └── index.css
-    ├── package.json
-    ├── vite.config.ts
-    └── tailwind.config.js
+├── frontend/
+│   ├── src/
+│   │   ├── components/         # ProtectedRoute, UI layout components
+│   │   ├── context/            # AuthContext state manager
+│   │   ├── pages/              # LoginPage, RegisterPage, DashboardPage
+│   │   ├── services/           # api.ts (Axios), auth.service.ts, url.service.ts
+│   │   ├── types/              # TypeScript interfaces
+│   │   ├── App.tsx
+│   │   ├── main.tsx
+│   │   └── index.css
+│   ├── Dockerfile
+│   ├── package.json
+│   ├── vite.config.ts
+│   └── tailwind.config.js
+│
+└── docker-compose.yml
 ```
 
 ---
@@ -124,13 +128,26 @@ d:\brototype\url-shortner\
 
 ---
 
-## Setup & Running Locally
+## Setup & Deployment
 
-### Prerequisites
+### Method 1: Easy Production Cloud Hosting (Vercel + Render + MongoDB Atlas)
+1. **Database**: Create free cluster on [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) and get connection string.
+2. **Backend**: Deploy `backend/` to [Render](https://render.com) (Web Service using Node.js).
+3. **Frontend**: Deploy `frontend/` to [Vercel](https://vercel.com) (Connect Git repository, set `VITE_API_BASE_URL` to Render backend URL).
+
+### Method 2: Docker Container Deployment (Single Command)
+```bash
+docker-compose up --build -d
+```
+This spins up MongoDB, Backend, and Frontend (Nginx) containers automatically.
+
+### Method 3: Running Locally
+
+#### Prerequisites
 - Node.js (v18+)
-- MongoDB (Running locally on `mongodb://localhost:27017` or MongoDB Atlas URI)
+- MongoDB (Running locally on `mongodb://localhost:27017`)
 
-### 1. Backend Setup
+#### 1. Backend Setup
 ```bash
 cd backend
 npm install
@@ -140,7 +157,7 @@ npm run start:dev
 - API Server: `http://localhost:4000`
 - Swagger Documentation: `http://localhost:4000/api/docs`
 
-### 2. Frontend Setup
+#### 2. Frontend Setup
 ```bash
 cd frontend
 npm install
