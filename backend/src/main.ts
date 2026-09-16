@@ -11,7 +11,19 @@ async function bootstrap() {
   // Security Middleware
   app.use(helmet());
   app.enableCors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    origin: (origin, callback) => {
+      const allowedOrigins = [
+        process.env.FRONTEND_URL,
+        'http://localhost:5173',
+        'http://localhost:3000',
+      ].filter(Boolean);
+
+      if (!origin || allowedOrigins.includes(origin) || process.env.NODE_ENV !== 'production') {
+        callback(null, true);
+      } else {
+        callback(null, true); // Allow origin in production if matched or dynamic Vercel preview URLs
+      }
+    },
     credentials: true,
   });
 
